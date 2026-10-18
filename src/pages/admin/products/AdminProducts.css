@@ -1,0 +1,40 @@
+.form-table-container{
+    display: flex;
+    gap:1rem;
+
+    .form-admin{
+        display: flex;
+        flex-direction: column;
+        gap:8px;
+        padding: 1.5rem 1rem;
+        background-color: var(--header-footer-color);
+        border-radius: 5px;
+        color: var(--background-principal);
+        height: max-content;
+        
+
+        .buttons-table{
+            display: flex;
+            gap:5px;
+        }
+
+
+        .inputs-container{
+            display: flex;
+            flex-direction: column;
+            gap:8px;
+        }
+
+        .form-input{
+            display: flex;
+            flex-direction: column;
+
+            input,select {
+                padding:5px;
+                background-color: #dddddd;
+                border-radius: 5px;
+                border: none;
+            }
+        }
+    }
+}
