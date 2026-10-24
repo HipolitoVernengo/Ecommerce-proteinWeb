@@ -2,12 +2,16 @@ import { NavLink } from "react-router";
 import { useState } from "react";
 import "./Header.css";
 import userLogo from "../../assets/images/logo.png";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCartShopping, faUser } from "@fortawesome/free-solid-svg-icons";
+import { useLocation } from "react-router";
 
 
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
-
+    const { hash } = useLocation();
     const closeMenu = () => setIsMenuOpen(false);
+
 
     return (
         <header className="header">
@@ -18,7 +22,7 @@ export default function Header() {
                     </NavLink>
                 </div>
                 <button
-                    className={`toggle${isMenuOpen ? " is-open" : ""}`}
+                    className="toggle"
                     type="button"
                     aria-label={isMenuOpen ? "Cerrar menú" : "Abrir menú"}
                     aria-expanded={isMenuOpen}
@@ -29,17 +33,26 @@ export default function Header() {
                     <span />
                     <span />
                 </button>
-                <div
-                    className={`navbar-separar${isMenuOpen ? " is-open" : ""}`}
-                    id="header-menu"
-                >
+                <div className={`navbar-separar ${isMenuOpen ? " is-open" : ""}`}
+                    id="header-menu">
                     <div className="navlinks">
                         <ul className="nav-list">
                             <li className="nav-item">
-                                <NavLink to="/" className="nav-link" onClick={closeMenu}>Inicio</NavLink>
+                                <NavLink
+                                    to="/" className={({ isActive }) =>
+                                        isActive && !hash ? "nav-link active" : "nav-link"
+                                    } onClick={closeMenu}>
+                                    Inicio
+                                </NavLink>
                             </li>
                             <li>
-                                <NavLink to="/features" className="nav-link" onClick={closeMenu}>Caracteristicas</NavLink>
+                                <NavLink
+                                    to="/#features"
+                                    className={({ isActive }) =>
+                                        isActive && hash === "#features" ? "nav-link active" : "nav-link"
+                                    }onClick={closeMenu}>
+                                    Características
+                                </NavLink>
                             </li>
                             <li>
                                 <NavLink to="/products" className="nav-link" onClick={closeMenu}>Productos</NavLink>
@@ -58,9 +71,16 @@ export default function Header() {
                             <NavLink to="/login" className="login outline" onClick={closeMenu}>Iniciar Sesión</NavLink>
                         </div>
                         <div className="icons">
-                            <NavLink to="/admin/products" className="nav-link" onClick={closeMenu}>
-                                Admin <i className="fa-regular fa-user" aria-hidden="true" />
-                            </NavLink>
+                            <div className="admin-dropdown">
+                                <NavLink to="" className="nav-link admin-trigger" onClick={closeMenu}>
+                                    Admin <FontAwesomeIcon icon={faUser} />
+                                </NavLink>
+                                <div className="admin-submenu">
+                                    <NavLink to="/admin/products" onClick={closeMenu}>Productos</NavLink>
+                                    <NavLink to="/admin/users" onClick={closeMenu}>Usuarios</NavLink>
+                                </div>
+                            </div>
+                            <FontAwesomeIcon icon={faCartShopping} />
                         </div>
                     </div>
                 </div>

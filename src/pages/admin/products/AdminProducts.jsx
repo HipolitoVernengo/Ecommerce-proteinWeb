@@ -3,13 +3,15 @@ import "./AdminProducts.css";
 import axios from "axios";
 import Swal from "sweetalert2";
 import { useEffect, useState } from "react";
+import ProductRow from "../../../components/product-row/ProductRow";
 
 const URL_BASE = "https://6a97037b0e3240db90619efc.mockapi.io";
 
 export default function AdminProducts() {
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, setValue, reset, formState: {errors, isValid}} = useForm({mode: "onBlur"});
   const [products, setProducts] = useState([]);
+  const [editingProductsId, setEditingProductsId] = useState(null);
 
   useEffect(() =>{
     obtenerProducto();
@@ -17,22 +19,38 @@ export default function AdminProducts() {
 
   async function onSubmitForm(data) {
     try{
-    const newProduct = data;
-    newProduct.createdAt = new Date().toISOString();
+      const product = data;
 
-    const response = await axios.post(`${URL_BASE}/products`, newProduct);
+      if(editingProductsId){
+        const response = await axios.put(`${URL_BASE}/products/${editingProductsId}`, product);
+        Swal.fire({
+        icon: "success",
+        title: "Producto editado",
+        text: "El producto se ha editado exitosamente"
+      })
+      }else{
+        product.createdAt = new Date().toISOString();
+        const response = await axios.post(`${URL_BASE}/products`, product);
 
-    Swal.fire({
-      icon: "success",
-      title: "Producto creado",
-      text: "El producto se ha creado exitosamente"
-    })
+        Swal.fire({
+        icon: "success",
+        title: "Producto creado",
+        text: "El producto se ha creado exitosamente"
+      })
+    }
+
+    setEditingProductsId(null); //Reseteo el estado de vuelta
+    reset();
+    obtenerProducto(); //Obtengo los productos
+    
 
     }catch(error){
       Swal.fire({
-        icon: error,
-        title: "Ocurrio un error",
-        text: "Hubo un error al crear el producto"
+        icon: "error",
+        title: editingProductsId ? "Error al editar" : "Error al crear",
+        text: editingProductsId
+          ? "Hubo un error al editar el producto"
+          : "Hubo un error al crear el producto"
       })
     }
 
@@ -61,6 +79,70 @@ export default function AdminProducts() {
     }
   }
 
+   async function handleDelete(id){
+    try{
+      const resultado = await Swal.fire({
+        icon: "warning",
+        title: "Estas seguro?",
+        text: "No podras revertir esto",
+        showCancelButton: true,
+        confirmButtonText: "Si, eliminar",
+        cancelButtonText: "Cancelar"
+      })
+
+      if(!resultado.isConfirmed){
+        return;
+      }
+
+      await axios.delete(`${URL_BASE}/products/${id}`);
+
+
+      Swal.fire({
+        icon: "success",
+        title: "Producto eliminado",
+        text: `El producto con el id: ${id} ha sido eliminado exitosamente`
+      })
+
+      obtenerProducto();
+
+    }catch(error){
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrio un error al eliminar el producto"
+      })
+    }
+  }
+
+  async function handleEdit(id){
+    try{
+      //Pedimos el id y luego completamos el formulario con los datos
+      //Buscamos el producto con .find
+
+      const productoEditar = products.find((prod) =>{
+        return prod.id === id;
+      })
+
+      if(productoEditar){
+        setValue("image", productoEditar.image);
+        setValue("name", productoEditar.name);
+        setValue("description", productoEditar.description);
+        setValue("createdAt", productoEditar.createdAt);
+        setValue("category", productoEditar.category);
+        setValue("price", productoEditar.price);
+        setValue("stock", productoEditar.stock); 
+      }
+
+      setEditingProductsId(productoEditar.id);
+    }catch(error){
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Ocurrio un error al editar el producto"
+      })
+    }
+  }
+
   return (
     <div>
       <h2 className="bienvenida my-4 text-center">Panel de administracion</h2>
@@ -72,7 +154,7 @@ export default function AdminProducts() {
             <div className='form-input'>
               <label htmlFor="fotoProducto">Foto del producto</label>
               <input
-                type="input"
+                type="url" 
                 id='fotoProducto'
                 {...register("image")}
                 className="input-file" />
@@ -82,7 +164,14 @@ export default function AdminProducts() {
               <input 
                 type="text" 
                 id='nombreProducto' 
-                placeholder='Nombre' {...register("name")} />
+                placeholder='Nombre' 
+                {...register("name", {
+                  required: "El nombre del producto es obligatorio",
+                  minLength: {value: 3, message: "El nombre debe contener al menos 3 caracteres"},
+                  maxLength: {value: 50, message:"El nombre del producto no puede tener mas de 50 caracteres"}
+                })}/>
+
+                {errors.name && <p className="error">{errors.name.message}</p>}
             </div>
             <div className='form-input'>
               <label htmlFor="descripcionProducto">Descripcion</label>
@@ -93,12 +182,14 @@ export default function AdminProducts() {
             </div>
             <div className="form-input">
               <label htmlFor="category">Categoria</label>
-              <select {...register("category")} id="category" required= "">
+              <select {...register("category", {required: "Debe seleccionar una categoria"})} id="category"  >
                 <option value="">Selecciona una categoria</option>
-                <option value="proteina">Proteina</option>
-                <option value="creatina">Creatina</option>
-                <option value="aminoacidos">Aminoacidos</option>
+                <option value="Proteina">Proteina</option>
+                <option value="Creatina">Creatina</option>
+                <option value="Aminoacidos">Aminoacidos</option>
               </select>
+
+              {errors.category && <p className="error">{errors.category.message}</p>}
             </div>
             <div className='form-input'>
               <label htmlFor="fechaProducto">Fecha de ingreso</label>
@@ -112,18 +203,20 @@ export default function AdminProducts() {
               <input 
                 type="number" 
                 id='precioProducto' 
-                {...register("price", { valueAsNumber: true })} 
-                placeholder='$' />
+                {...register("price", { valueAsNumber: true, required: "Debe ingresar un precio" })} 
+                placeholder='$'/>
+
+                {errors.price && <p className="error">{errors.price.message}</p>}
             </div>
             <div className='form-input'>
               <label htmlFor="stockProducto">Stock</label>
               <input 
                 type="number" 
                 id='stockProducto' 
-                {...register("stock", { valueAsNumber: true })} />
+                {...register("stock", { valueAsNumber: true, required: "Necesita ingresar un valor" })} />
             </div>
             <div className='form-input'>
-              <button className="btn-submit background mt-2">Cargar producto</button>
+              <button disabled={!isValid} className="btn-submit background mt-2">{editingProductsId ?"Editar producto":"Cargar producto"}</button>
             </div>
 
           </div>
@@ -137,33 +230,21 @@ export default function AdminProducts() {
                 <th>Descripcion</th>
                 <th>Ingreso</th>
                 <th>Precio</th>
+                <th>Categoria</th>
+                <th>Stock</th>
                 <th className="text-center">Acciones</th>
               </tr>
             </thead>
             <tbody>
               {products.map((product) =>{
-              return <tr className="align-middle">
-                <td>
-                  <img
-                    className="img-table-admin"
-                    src="/src/assets/images/product1.webp"
-                    alt=""
-                  />
-                </td>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td>{product.date}</td>
-                <td>{`$ ${product.price}`}</td>
-                <td className="buttons-table">
-                  <button className="btn btn-primary">Editar</button>
-                  <button className="btn btn-danger">Eliminar</button>
-                </td>
-              </tr>
+                return <ProductRow  key={product.id} 
+                                    prod = {product} 
+                                    handleEdit = {handleEdit} 
+                                    handleDelete = {handleDelete}/>
               })}
             </tbody>
           </table>
         </div>
-
       </div>
     </div>
   )

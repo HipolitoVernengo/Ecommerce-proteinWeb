@@ -1,0 +1,58 @@
+.form-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  padding: 1rem;
+  background:
+    radial-gradient(ellipse at top left, rgb(255 107 53 / 15%), transparent 40%),
+    linear-gradient(135deg, #f8fafc, #e2e8f0);
+
+    .formulario-register {
+    padding: 1rem;
+    background-color: var(--header-footer-color);
+    border-radius: 5px;
+
+    .title-register {
+        color: var(--background-principal);
+    }
+}
+}
+
+.btn-submit:disabled{
+        opacity: 0.6;
+    }
+
+.error{
+  color: var(--accent-color)
+}
+
+.formulario {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    border-radius: 5px;
+    padding: 10px;
+    background-color: var(--header-footer-color);
+    color: var(--background-principal);
+
+    .inputs {
+        display: flex;
+        flex-direction: column;
+
+        input,
+        textarea {
+            padding: 5px;
+            background-color: #dddddd;
+            font-family: sans-serif;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .background {
+            border-radius: 5px;
+        }
+    }
+}
+
+

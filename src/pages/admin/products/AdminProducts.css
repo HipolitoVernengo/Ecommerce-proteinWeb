@@ -1,40 +1,106 @@
-.form-table-container{
+.form-table-container {
     display: flex;
-    gap:1rem;
+    gap: 1rem;
 
-    .form-admin{
+    .form-admin {
         display: flex;
         flex-direction: column;
-        gap:8px;
+        gap: 8px;
         padding: 1.5rem 1rem;
         background-color: var(--header-footer-color);
         border-radius: 5px;
         color: var(--background-principal);
         height: max-content;
-        
+        flex: 1;
+        min-width: 380px;
 
-        .buttons-table{
-            display: flex;
-            gap:5px;
+        h3 {
+            font-weight: 600;
         }
 
 
-        .inputs-container{
+
+        .buttons-table {
             display: flex;
-            flex-direction: column;
-            gap:8px;
+            gap: 5px;
         }
 
-        .form-input{
+
+        .inputs-container {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .form-input {
             display: flex;
             flex-direction: column;
 
-            input,select {
-                padding:5px;
+            input,
+            select {
+                padding: 5px;
                 background-color: #dddddd;
                 border-radius: 5px;
                 border: none;
             }
+        }
+    }
+
+    .error {
+        color: var(--accent-color);
+    }
+
+    .btn-submit:disabled {
+        opacity: 0.6;
+    }
+
+
+
+    .buttons-table {
+        display: flex;
+        gap: 3px;
+
+        svg {
+            color: #ffffff;
+        }
+
+        .editButton {
+            background-color: blue;
+            padding: 5px 8px;
+            border-radius: 5px;
+        }
+
+        .deleteButton {
+            background-color: red;
+            padding: 5px 8px;
+            border-radius: 5px;
+        }
+    }
+}
+
+.table-container {
+    overflow-x: auto;
+
+    .table {
+
+        .img-table-admin {
+            width: 55px;
+            height: 55px;
+        }
+
+    }
+}
+
+@media (width < 960px) {
+    .form-table-container {
+        flex-direction: column;
+
+        .form-admin {
+            width: 100%;
+            max-width: 500px;
+            min-width: 0;
+            flex: none;
+            align-self: center;
         }
     }
 }

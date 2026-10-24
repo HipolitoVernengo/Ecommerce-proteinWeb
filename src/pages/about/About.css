@@ -1,0 +1,44 @@
+.container-information {
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+
+    .info-proyecto {
+        .proyecto-description {
+            font-size: 1.2rem;
+            background-color: var(--background-boxs);
+            padding: 1rem;
+            border-radius: 8px;
+        }
+    }
+
+    .frase {
+        font-size: 1.5rem;
+        font-weight: 600;
+        margin: 1rem;
+    }
+
+    .avatar-about-me-container {
+        display: flex;
+        width: 50%;
+        margin: 0 auto;
+        align-items: center;
+        gap: 1rem;
+        margin-top: 1rem;
+        background-color: var(--background-boxs);
+        padding: 1rem;
+        border-radius: 8px;
+        font-size: 18px;
+
+        .avatar {
+
+
+            img {
+                width: 150px;
+                height: 150px;
+                object-fit: cover;
+                border-radius: 50%;
+            }
+        }
+    }
+}

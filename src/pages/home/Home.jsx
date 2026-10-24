@@ -1,6 +1,21 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import "./home.css";
+import { faCreditCard, faLock, faTruck } from "@fortawesome/free-solid-svg-icons";
+import ProductContainer from "../../components/product-container/ProductContainer";
+import { Link } from "react-router";
+import { useEffect } from "react";
+import { useLocation } from "react-router";
 
 export default function Home() {
+
+const { hash } = useLocation();
+
+useEffect(() => {
+  if (hash) {
+    document.querySelector(hash)?.scrollIntoView({ behavior: "smooth" });
+  }
+}, [hash]);
+
     return (
         <main className="main-container">
             <section className="banner mt-4">
@@ -10,10 +25,10 @@ export default function Home() {
                         <span>ELEVATE </span>
                     </p>
                     <p className="banner-sentence text-white">YOUR GAINS</p>
-                    <div className="button-banner">
-                        <a href="#" className="background">
+                    <div className=" button-banner">
+                        <Link to = "/products" className="btn background">
                             Ver productos
-                        </a>
+                        </Link>
                     </div>
                 </div>
             </section>
@@ -90,174 +105,21 @@ export default function Home() {
                 <div className="product-title">
                     <h2 className="text-center mb-4 mt-3">Productos Destacados</h2>
                 </div>
-                <div className="products">
-                    <div className="card">
-                        <div className="card-header">
-                            <img src="/assets/products/product1.webp" alt="" />
-                            <div className="ver-mas">
-                                <a href="/pages/product-detail.html">
-                                    Ver más <i className="fa-solid fa-magnifying-glass" />
-                                </a>
-                            </div>
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">Whey Protein Star Nutrition - (907g)</h2>
-                            <p className="category">Proteina</p>
-                            <div className="price-buy">
-                                <p className="precio">$55.000</p>
-                                <a href="/pages/product-detail.html" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://www.enasport.com/cdn/shop/files/TM_WP_2lbCh.webp?v=1779904463&width=1000"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">TrueMade Whey Protein (930 Gr)</h2>
-                            <p className="category">Proteina</p>
-                            <div className="price-buy">
-                                <p className="precio">$45.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://farmalife.vtexassets.com/arquivos/ids/190555-1200-auto?v=638636532007070000&width=1200&height=auto&aspect=true"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">Creatina Micronizada Neutro X 300 G</h2>
-                            <p className="category">Creatina</p>
-                            <div className="price-buy">
-                                <p className="precio">$23.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://farmacityar.vtexassets.com/arquivos/ids/286947/162463_suplemento-dietario-creatina-micronizada-sabor-fruit-punch-x-300-gr_imagen-1.jpg?v=639027070168230000"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">
-                                Creatina Micronizada Sabor a Fruit Punch x 300 g
-                            </h2>
-                            <p className="category">Creatina</p>
-                            <div className="price-buy">
-                                <p className="precio">$26.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQCto3NeZcNX1gl1ARrKSym_nXm8mX8G_ppng&s"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">
-                                TRUEMADE AMINO FULL 146 GRS (BCAA+CAFEINA) ENA SPORT
-                            </h2>
-                            <p className="category">Aminoacidos</p>
-                            <div className="price-buy">
-                                <p className="precio">$55.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://acdn-us.mitiendanube.com/stores/006/011/728/products/amino_4500_150tab-1-2afbc108c0247c383717527639545279-1024-1024.webp"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">ENA Amino 4500 150 TABS</h2>
-                            <p className="category">Proteina</p>
-                            <div className="price-buy">
-                                <p className="precio">$28.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://farmacityar.vtexassets.com/arquivos/ids/258066-500-auto?v=638986541848970000&width=500&height=auto&aspect=true"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">Shaker Pure Wellness</h2>
-                            <p className="category">Vasos</p>
-                            <div className="price-buy">
-                                <p className="precio">$20.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="card">
-                        <div className="card-header">
-                            <img
-                                src="https://farmacityar.vtexassets.com/arquivos/ids/249565-500-auto?v=638362761999800000&width=500&height=auto&aspect=true"
-                                alt=""
-                            />
-                        </div>
-                        <div className="card-body">
-                            <h2 className="card-title">
-                                Barra Proteica Pure Wellness Sabor Cookies and Cream x 46 g
-                            </h2>
-                            <p className="category">Barra proteica</p>
-                            <div className="price-buy">
-                                <p className="precio">$55.000</p>
-                                <a href="" className="buy">
-                                    Comprar <i className="fa-solid fa-bag-shopping" />
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                <ProductContainer />
             </section>
             <section className="features" id="features">
                 <h2 className="feature-title text-center mt-4 mb-4">Caracteristicas</h2>
                 <div className="feature-container">
                     <div className="feature">
-                        <i className="fa-solid fa-truck-fast icon" />
+                        <FontAwesomeIcon icon={faTruck} className="icon"/>
                         <p>Envíos a todo el país</p>
                     </div>
                     <div className="feature borderr">
-                        <i className="fa-solid fa-credit-card icon" />
+                        <FontAwesomeIcon icon={faCreditCard} className="icon"/>
                         <p>Todos los medios de pago</p>
                     </div>
                     <div className="feature borderr">
-                        <i className="fa-solid fa-lock icon" />
+                        <FontAwesomeIcon icon={faLock} className="icon" />
                         <p>Compra 100% protegida</p>
                     </div>
                 </div>

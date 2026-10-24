@@ -1,0 +1,43 @@
+.formulario-register {
+    padding: 1rem;
+    background-color: var(--header-footer-color);
+    border-radius: 5px;
+    min-width: 380px;
+
+    .title-register {
+        color: var(--background-principal);
+        text-align: center;
+    }
+}
+
+
+        input,
+        textarea, select {
+            padding: 5px;
+            background-color: #dddddd;
+            font-family: sans-serif;
+            border-radius: 5px;
+            border: none;
+        }
+
+        .background {
+            border-radius: 5px;
+        }
+
+        
+@media (width < 960px) {
+    .form-table-container {
+        flex-direction: column;
+
+        .formulario-register {
+            width: 100%;
+            max-width: 500px;
+            min-width: 0;
+            flex: none;
+            align-self: center;
+        }
+    }
+}
+
+
+    

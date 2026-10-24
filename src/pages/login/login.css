@@ -1,0 +1,53 @@
+.formul-container {
+  min-height: 100vh;
+  display: flex;
+  justify-content: center; 
+  align-items: center;     
+  padding: 1rem 0 0.5rem 0 ;
+  background:
+    radial-gradient(ellipse at top left, rgb(255 107 53 / 15%), transparent 40%),
+    linear-gradient(135deg, #f8fafc, #e2e8f0);
+}
+
+.formul-login {
+  display: flex;
+  flex-direction: column;
+  min-width: 400px;
+  padding: 1rem 2rem 2rem;
+  border-radius: 5px;
+  background-color: var(--header-footer-color);
+  color: var(--background-principal);
+
+  h2{
+    text-align: center;
+    padding-bottom: 5px;
+  }
+
+  .formul{
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    border-top: 2px solid var(--background-principal);
+    border-radius: 5px;
+    padding-top: 8px;
+  }
+}
+
+.inputs {
+  display: flex;
+  flex-direction: column;
+
+  input{
+    border-radius: 5px;
+    padding: 1px;
+  }
+}
+
+.btn-submit:disabled{
+        opacity: 0.6;
+        margin-top: 10px;
+    }
+
+.error{
+  color: var(--accent-color)
+}

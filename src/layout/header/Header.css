@@ -11,6 +11,7 @@
         padding: 0 12px;
         min-height: 80px;
         font-family: var(--font-principal);
+        font-weight: bold;
 
         .logo {
             width: 150px;
@@ -86,6 +87,56 @@
     }
 }
 
+.icons{
+    display: flex;
+    align-items: center;
+    gap:12px;
+    color: var(--background-principal);
+    cursor: pointer;
+}
+
+.admin-dropdown {
+    position: relative;
+
+    .admin-trigger {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        color: var(--background-principal);
+        text-decoration: none;
+    }
+
+    .admin-submenu {
+        position: absolute;
+        top: 100%;
+        right: 0;
+        z-index: 1;
+        display: none;
+        min-width: 150px;
+        padding: 0.4rem 0;
+        background-color: var(--header-footer-color);
+        border-radius: 5px;
+        box-shadow: 0 8px 12px rgb(0 0 0 / 20%);
+
+        a {
+            display: block;
+            padding: 0.55rem 0.8rem;
+            color: var(--background-principal);
+            text-decoration: none;
+
+            &:hover,
+            &:focus {
+                background-color: var(--accent-color);
+            }
+        }
+    }
+
+    &:hover .admin-submenu,
+    &:focus-within .admin-submenu {
+        display: block;
+    }
+}
+
 @media (width < 960px) {
     .header {
         .navbar {
@@ -95,6 +146,24 @@
             .logo {
                 width: 120px;
                 height: 68px;
+            }
+
+            .toggle {
+                display: flex;
+                flex-direction: column;
+                gap: 5px;
+                padding: 8px;
+                border: 0;
+                background: transparent;
+                cursor: pointer;
+
+                span {
+                    display: block;
+                    width: 25px;
+                    height: 3px;
+                    border-radius: 2px;
+                    background-color: var(--background-principal);
+                }
             }
 
             .navbar-separar {
@@ -109,6 +178,10 @@
                 padding: 1rem 1.5rem 1.5rem;
                 background-color: var(--header-footer-color);
                 box-shadow: 0 8px 12px rgb(0 0 0 / 20%);
+
+                &.is-open {
+                    display: flex;
+                }
 
                 .nav-list {
                     align-items: stretch;
@@ -128,6 +201,21 @@
 
                     .botones {
                         flex-wrap: wrap;
+                    }
+
+                    .icons {
+                        align-items: flex-start;
+                        flex-direction: column;
+                    }
+                }
+
+                .admin-dropdown {
+                    .admin-submenu {
+                        position: static;
+                        display: flex;
+                        flex-direction: column;
+                        padding-left: 0.75rem;
+                        box-shadow: none;
                     }
                 }
             }
