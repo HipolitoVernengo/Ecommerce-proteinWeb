@@ -7,7 +7,7 @@ import Swal from "sweetalert2";
 import UserRow from "../../../components/user-row/UserRow";
 
 export default function AdminUsers() {
-  const { register, handleSubmit, setValue, formState: { errors, isValid }, reset } = useForm({ mode: "onBlur" });
+  const { register, handleSubmit, setValue, getValues, formState: { errors, isValid }, reset } = useForm({ mode: "onBlur" });
 
   const [users, setUsers] = useState([]);
   const [isEditing, setIsEditing] = useState(null);
@@ -183,13 +183,16 @@ export default function AdminUsers() {
               <label htmlFor="password">Contraseña</label>
               <input type="password"
                 {...register("password", {
-                  required: "Debe ingresar una contraseña", minLength: { value: 8, message: "Debe contener al menos 8 caracteres" }
+                  required: "Debe ingresar una contraseña", minLength: { value: 8, message: "Debe contener al menos 8 caracteres", deps: "confirmPassword" }
                 })} />
               {errors.password && <p className="error">{errors.password.message}</p>}
             </div>
             <div className="inputs">
               <label htmlFor="confirmPassword">Repetir contraseña</label>
-              <input type="password" id="confirmPassword" {...register("confirmPassword", { required: "La contraseña debe coincidir" })} />
+              <input type="password" id="confirmPassword" {...register("confirmPassword", { required: "Debe repetir la contraseña", validate: (value) => value === getValues("password") || "Las contraseñas no coinciden",
+               })} />
+
+               {errors.confirmPassword && <p className="error">{errors.confirmPassword.message}</p>}
 
 
             </div>
@@ -223,6 +226,7 @@ export default function AdminUsers() {
               <tr>
                 <th>Nombre</th>
                 <th>Apellido</th>
+                <th>Email</th>
                 <th>Contraseña</th>
                 <th>Fecha nacimiento</th>
                 <th>Pais</th>
